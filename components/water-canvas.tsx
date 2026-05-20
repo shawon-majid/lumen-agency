@@ -16,6 +16,10 @@ uniform vec2  u_resolution;
 uniform float u_time;
 uniform vec2  u_mouse;
 uniform float u_intensity;
+uniform vec3  u_base;
+uniform vec3  u_mid;
+uniform vec3  u_high;
+uniform vec3  u_accent;
 
 /* ── 2D simplex noise (Ian McEwan / Stefan Gustavson) ───────── */
 vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
@@ -79,19 +83,14 @@ void main() {
   float caustic = pow(0.5 + 0.5 * f, 1.8);
   caustic = smoothstep(0.22, 0.94, caustic);
 
-  /* Warm palette — sRGB approximations of the OKLCH tokens */
-  vec3 cream   = vec3(0.965, 0.945, 0.905);
-  vec3 amber   = vec3(0.995, 0.860, 0.620);
-  vec3 peach   = vec3(0.985, 0.760, 0.620);
-  vec3 magenta = vec3(0.945, 0.610, 0.680);
+  /* Palette comes from React via uniforms (warm or cool) */
+  vec3 col = mix(u_base, u_mid, smoothstep(-0.2, 0.6, f));
+  col = mix(col, u_high,   smoothstep(0.30, 0.90, caustic));
+  col = mix(col, u_accent, smoothstep(0.78, 1.00, caustic) * 0.55);
 
-  vec3 col = mix(cream, amber, smoothstep(-0.2, 0.6, f));
-  col = mix(col, peach,   smoothstep(0.30, 0.90, caustic));
-  col = mix(col, magenta, smoothstep(0.78, 1.00, caustic) * 0.55);
-
-  /* Vignette toward cream for a settled, in-vessel feel */
+  /* Vignette toward base for a settled, in-vessel feel */
   float vig = smoothstep(1.15, 0.30, length(uv - 0.5));
-  col = mix(cream, col, vig * 0.85 + 0.15);
+  col = mix(u_base, col, vig * 0.85 + 0.15);
 
   /* Slight cool falloff in the top-right to avoid uniform warmth */
   col *= 1.0 - 0.05 * smoothstep(0.4, 1.2, uv.x + (1.0 - uv.y));
@@ -104,12 +103,41 @@ void main() {
   outColor = vec4(col, 1.0);
 }`;
 
+type PaletteName = "warm" | "cool";
+
+interface Palette {
+  base: [number, number, number];
+  mid: [number, number, number];
+  high: [number, number, number];
+  accent: [number, number, number];
+}
+
+const PALETTES: Record<PaletteName, Palette> = {
+  // Warm — sunset on a cream pool. Matches the v1 OKLCH tokens (canvas, amber, peach, magenta).
+  warm: {
+    base: [0.965, 0.945, 0.905],
+    mid: [0.995, 0.860, 0.620],
+    high: [0.985, 0.760, 0.620],
+    accent: [0.945, 0.610, 0.680],
+  },
+  // Cool — clear water, sky reflections. Tuned to read as a pool at noon.
+  cool: {
+    base: [0.960, 0.978, 0.985],
+    mid: [0.660, 0.890, 0.945],
+    high: [0.430, 0.795, 0.890],
+    accent: [0.965, 0.580, 0.545],
+  },
+};
+
 interface Props {
   intensity?: number;
   className?: string;
+  /** Manual palette override. If omitted, the canvas auto-detects from the
+   *  nearest `[data-theme]` ancestor (`v2` → cool, anything else → warm). */
+  palette?: PaletteName;
 }
 
-export function WaterCanvas({ intensity = 1.0, className }: Props) {
+export function WaterCanvas({ intensity = 1.0, className, palette }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -163,6 +191,19 @@ export function WaterCanvas({ intensity = 1.0, className }: Props) {
     const uTime = gl.getUniformLocation(prog, "u_time");
     const uMouse = gl.getUniformLocation(prog, "u_mouse");
     const uIntensity = gl.getUniformLocation(prog, "u_intensity");
+    const uBase = gl.getUniformLocation(prog, "u_base");
+    const uMid = gl.getUniformLocation(prog, "u_mid");
+    const uHigh = gl.getUniformLocation(prog, "u_high");
+    const uAccent = gl.getUniformLocation(prog, "u_accent");
+
+    const detectedTheme = canvas.closest("[data-theme]")?.getAttribute("data-theme");
+    const resolvedPalette: PaletteName =
+      palette ?? (detectedTheme === "v2" ? "cool" : "warm");
+    const pal = PALETTES[resolvedPalette];
+    gl.uniform3f(uBase, ...pal.base);
+    gl.uniform3f(uMid, ...pal.mid);
+    gl.uniform3f(uHigh, ...pal.high);
+    gl.uniform3f(uAccent, ...pal.accent);
 
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
 
@@ -232,7 +273,7 @@ export function WaterCanvas({ intensity = 1.0, className }: Props) {
       gl.deleteShader(fs);
       gl.deleteBuffer(buf);
     };
-  }, [intensity]);
+  }, [intensity, palette]);
 
   return (
     <canvas
