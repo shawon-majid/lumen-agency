@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme {
+  /* ───────── Palette · OKLCH, warm-tinted neutrals ───────── */
+  --color-canvas: oklch(0.972 0.014 80);
+  --color-canvas-soft: oklch(0.948 0.020 75);
+  --color-canvas-deep: oklch(0.918 0.028 70);
+
+  --color-ink: oklch(0.215 0.030 35);
+  --color-ink-muted: oklch(0.495 0.028 35);
+  --color-ink-subtle: oklch(0.680 0.022 35);
+
+  --color-peach: oklch(0.820 0.140 45);
+  --color-magenta: oklch(0.660 0.220 5);
+  --color-amber: oklch(0.840 0.160 75);
+  --color-rose: oklch(0.740 0.180 18);
+
+  --color-glass: oklch(0.985 0.012 60 / 0.55);
+  --color-glass-line: oklch(1 0 0 / 0.5);
+
+  /* ───────── Type families ───────── */
+  --font-sans: var(--font-hanken), "Helvetica Neue", system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), "Charter", Georgia, serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+
+  /* ───────── Fluid type scale ───────── */
+  --text-mega: clamp(3.4rem, 11vw, 9.5rem);
+  --text-display: clamp(2.5rem, 7vw, 6rem);
+  --text-h1: clamp(1.95rem, 4.4vw, 4rem);
+  --text-h2: clamp(1.55rem, 2.8vw, 2.6rem);
+
+  /* ───────── Motion ───────── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body { overflow-x: hidden; }
+
+::selection {
+  background: var(--color-peach);
+  color: var(--color-ink);
+}
+
+/* Hide system cursor on pointer devices — replaced by custom cursor */
+@media (hover: hover) and (pointer: fine) {
+  body, a, button, input, textarea, [role="button"] { cursor: none; }
+}
+
+/* Lenis smooth-scroll resets */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.animate-marquee { animation: marquee 44s linear infinite; }
+
+/* Custom cursor element */
+.custom-cursor {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: oklch(0.66 0.22 5);
+  opacity: 0;
+  mix-blend-mode: multiply;
+  transition:
+    opacity 0.3s ease,
+    width 0.45s var(--ease-out-expo),
+    height 0.45s var(--ease-out-expo),
+    background-color 0.3s ease;
+  will-change: transform;
+}
+.custom-cursor.cursor-large {
+  width: 58px;
+  height: 58px;
+  background: oklch(0.82 0.14 45 / 0.30);
+}
+
+/* Reduced motion: kill everything decorative */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee { animation: none; }
+}
