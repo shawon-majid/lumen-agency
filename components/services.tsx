@@ -188,7 +188,11 @@ function ServiceRow({ service }: { service: Service }) {
     </div>
   );
 
-  if (service.layout === "wide") {
+  // Text-only rows (wide + narrow) share the same column grid so the
+  // page reads with a consistent rhythm. Variation is reserved for the
+  // "full" row, which has a meaningfully different content beat (the
+  // inline glass capability preview below).
+  if (service.layout === "wide" || service.layout === "narrow") {
     return (
       <div className="grid grid-cols-12 gap-6 items-start">
         <div className="col-span-12 md:col-span-1 mb-2 md:mb-0">{counter}</div>
@@ -200,22 +204,6 @@ function ServiceRow({ service }: { service: Service }) {
           {capabilities}
         </div>
         <div className="col-span-12 md:col-span-3">{engagementBlock}</div>
-      </div>
-    );
-  }
-
-  if (service.layout === "narrow") {
-    return (
-      <div className="grid grid-cols-12 gap-6 items-start">
-        <div className="col-span-12 md:col-span-1 mb-2 md:mb-0">{counter}</div>
-        <div className="col-span-12 md:col-start-3 md:col-span-5 max-w-xl">
-          {title}
-          <p className="mt-5 text-[var(--color-ink-muted)] text-[15px] leading-[1.65] max-w-md">
-            {service.blurb}
-          </p>
-          {capabilities}
-        </div>
-        <div className="col-span-12 md:col-start-9 md:col-span-4">{engagementBlock}</div>
       </div>
     );
   }
