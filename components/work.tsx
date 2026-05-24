@@ -49,7 +49,7 @@ export function Work() {
         <div className="space-y-16 md:space-y-28">
           {WORK.map((w, i) => (
             <Reveal key={w.slug}>
-              <WorkRow work={w} flip={i % 2 === 1} sizeClass={HOMEPAGE_SIZES[i % HOMEPAGE_SIZES.length]} />
+              <WorkRow work={w} flip={i % 2 === 1} sizeClass={HOMEPAGE_SIZES[0]} />
             </Reveal>
           ))}
         </div>
