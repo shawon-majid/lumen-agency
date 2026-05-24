@@ -67,8 +67,11 @@ function WorkRow({
   flip: boolean;
   sizeClass: string;
 }) {
+  // When flipped (meta on the left), anchor the tile to the right edge of
+  // the row so the trailing gap sits between meta and tile — matching the
+  // shape of non-flipped rows where the meta is flush-right.
   const tile = (
-    <div className={`col-span-12 ${sizeClass}`}>
+    <div className={`col-span-12 ${sizeClass} ${flip ? "md:col-end-13" : ""}`}>
       <Link href={`/work/${work.slug}`} className="block h-full w-full">
         <WorkTile work={work} />
       </Link>
