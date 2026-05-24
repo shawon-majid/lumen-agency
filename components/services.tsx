@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "./reveal";
+import { CapabilityVisual } from "./capability-visual";
 
 type Layout = "wide" | "narrow" | "full";
 
@@ -13,6 +14,28 @@ interface Service {
   swatch: string;
   engagement: { shape: string; cycle: string; team: string };
 }
+
+/* Per-capability sub-lines used in the mini cards. Short and concrete —
+   they sit under the capability name in the same vertical column as the
+   "01 · CAPABILITY" meta at top, so they read as the lower meta line. */
+const CAPTIONS: Record<string, string> = {
+  "Streaming UI": "Tokens render the moment they arrive",
+  "Multimodal": "Text, image, audio — one canvas",
+  "Editorial design": "Hierarchy, type, restraint",
+  "Motion": "Reveals, not decoration",
+  "Tool use": "Function calls, schemas, retries",
+  "Memory": "Short, long, and structured",
+  "Orchestration": "Multi-agent, planned, observable",
+  "Eval harnesses": "Regression suites on every PR",
+  "Embeddings": "Domain-tuned, evaluated",
+  "Hybrid search": "BM25 + dense, fused",
+  "Reranking": "Cross-encoders that pay rent",
+  "Drift evals": "Catch silent regressions in CI",
+  "Inference": "Latency budgets you can defend",
+  "Training": "Eval-first, distribution-aware",
+  "Observability": "Slice-level dashboards",
+  "CI/CD": "Models ship like code",
+};
 
 const SERVICES: Service[] = [
   {
@@ -226,34 +249,57 @@ function ServiceRow({ service }: { service: Service }) {
           {/* Bright caustic spots */}
           <div className="absolute top-[18%] left-[22%] h-[40%] w-[42%] rounded-full bg-white/55 blur-[80px]" />
           <div className="absolute bottom-[10%] right-[14%] h-[36%] w-[32%] rounded-full bg-white/40 blur-[100px]" />
-          {/* Glass panes */}
+          {/* Capability cards — each holds a bespoke mini-visual that
+              demonstrates the capability instead of just naming it. */}
           <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 gap-3 p-3">
-            {service.capabilities.map((c) => (
+            {service.capabilities.map((c, i) => (
               <div
                 key={c}
-                className="rounded-[10px] backdrop-blur-[10px] flex flex-col justify-between p-4 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
+                className="relative rounded-[10px] backdrop-blur-[10px] overflow-hidden transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
                 style={{
                   background: "oklch(1 0 0 / 0.30)",
                   border: "1px solid oklch(1 0 0 / 0.45)",
                   boxShadow: "0 10px 40px -10px oklch(0.215 0.030 35 / 0.10)",
                 }}
               >
-                <span
-                  className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink)]/65"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  capability
-                </span>
-                <span
-                  className="text-[var(--color-ink)] leading-[1.05]"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "clamp(1.05rem, 1.5vw, 1.4rem)",
-                    fontWeight: 300,
-                  }}
-                >
-                  {c}
-                </span>
+                {/* Top meta row */}
+                <div className="absolute top-0 inset-x-0 flex items-center justify-between px-4 pt-3.5">
+                  <span
+                    className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink)]/55"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    {String(i + 1).padStart(2, "0")} · capability
+                  </span>
+                  <span
+                    className="block h-1 w-1 rounded-full bg-[var(--color-ink)]/35"
+                    aria-hidden
+                  />
+                </div>
+
+                {/* Mini-visual takes the middle band */}
+                <div className="absolute inset-x-3 top-12 bottom-16 flex items-center justify-center">
+                  <CapabilityVisual name={c} />
+                </div>
+
+                {/* Bottom: name + sub-line */}
+                <div className="absolute bottom-0 inset-x-0 px-4 pb-4">
+                  <span
+                    className="block text-[var(--color-ink)] leading-[1.05]"
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "clamp(1.05rem, 1.5vw, 1.4rem)",
+                      fontWeight: 300,
+                    }}
+                  >
+                    {c}
+                  </span>
+                  <span
+                    className="mt-1 block text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    {CAPTIONS[c] ?? "ships with every interface"}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

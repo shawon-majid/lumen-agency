@@ -150,6 +150,9 @@ function WorkMeta({ work, align }: { work: CaseStudy; align: "left" | "right" })
 }
 
 function WorkTile({ work }: { work: CaseStudy }) {
+  // Use the first outcome metric as the at-a-glance proof point on the tile.
+  const headline = work.outcome[0];
+
   return (
     <div
       className="relative h-full w-full overflow-hidden rounded-[16px] group cursor-none"
@@ -160,44 +163,89 @@ function WorkTile({ work }: { work: CaseStudy }) {
       <div className="absolute -top-[10%] left-[18%] h-[55%] w-[55%] rounded-full bg-white/55 blur-[80px] transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-6 group-hover:-translate-y-2" />
       <div className="absolute bottom-[5%] right-[8%] h-[45%] w-[40%] rounded-full bg-white/35 blur-[100px] transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-4 group-hover:translate-y-2" />
 
-      {/* Glass pane that lifts on hover */}
-      <div
-        className="absolute inset-x-[8%] bottom-[8%] top-[58%] rounded-[10px] backdrop-blur-[14px] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2"
-        style={{
-          background: "oklch(1 0 0 / 0.32)",
-          border: "1px solid oklch(1 0 0 / 0.45)",
-          boxShadow: "0 30px 60px -30px oklch(0.215 0.030 35 / 0.30)",
-        }}
-      >
-        <div className="flex h-full items-end justify-between p-5">
+      {/* Top meta strip — number left, sector + year right */}
+      <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
+        <span
+          className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink)]/60"
+          style={{ fontFamily: "var(--font-mono)" }}
+        >
+          {work.n} / 06
+        </span>
+        <span
+          className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink)]/60"
+          style={{ fontFamily: "var(--font-mono)" }}
+        >
+          {work.sector} · {work.year}
+        </span>
+      </div>
+
+      {/* Floating outcome metric — peeks out from above the glass pane.
+          A single quantified result is more credible than three vague ones. */}
+      <div className="absolute inset-x-[8%] top-[40%] flex items-end justify-end pr-2">
+        <div className="text-right transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1">
           <span
-            className="text-[var(--color-ink)] leading-[1.05]"
+            className="block leading-[0.9] tracking-[-0.025em] text-[var(--color-ink)]"
             style={{
               fontFamily: "var(--font-serif)",
-              fontSize: "clamp(1.15rem, 1.6vw, 1.5rem)",
+              fontSize: "clamp(1.9rem, 3.4vw, 3.2rem)",
               fontWeight: 300,
-              fontStyle: "italic",
             }}
           >
-            {work.client}
+            {headline.metric}
           </span>
-          <span
-            className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink)]/70"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            Read →
+          <span className="mt-1 block text-[11px] leading-[1.4] text-[var(--color-ink)]/70 max-w-[14rem] ml-auto">
+            {headline.label}
           </span>
         </div>
       </div>
 
-      {/* Tiny meta in top-left */}
-      <div className="absolute top-5 left-5">
-        <span
-          className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink)]/55"
-          style={{ fontFamily: "var(--font-mono)" }}
-        >
-          {work.n}
-        </span>
+      {/* Glass pane that lifts on hover — now stacks client/title + tease + tags + Read */}
+      <div
+        className="absolute inset-x-[6%] bottom-[6%] rounded-[12px] backdrop-blur-[14px] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2 p-5 md:p-6"
+        style={{
+          background: "oklch(1 0 0 / 0.34)",
+          border: "1px solid oklch(1 0 0 / 0.48)",
+          boxShadow: "0 30px 60px -30px oklch(0.215 0.030 35 / 0.30)",
+        }}
+      >
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h3
+              className="leading-[1.0] tracking-[-0.018em] text-[var(--color-ink)]"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(1.3rem, 1.9vw, 1.85rem)",
+                fontWeight: 300,
+              }}
+            >
+              <span style={{ fontStyle: "italic" }}>{work.client}</span>{" "}
+              <span className="text-[var(--color-ink-muted)]">— {work.title}</span>
+            </h3>
+          </div>
+
+          <p className="text-[13px] text-[var(--color-ink-muted)] leading-[1.55] max-w-xl">
+            {work.tease}
+          </p>
+
+          <div className="flex items-end justify-between gap-4 pt-1">
+            <div
+              className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-[var(--color-ink)]/65"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              {work.tags.map((t) => (
+                <span key={t}>— {t}</span>
+              ))}
+              <span>— {work.duration}</span>
+            </div>
+            <span
+              className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink)] shrink-0 inline-flex items-center gap-2 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              <span className="inline-block h-px w-6 bg-[var(--color-ink)]" />
+              Read
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
