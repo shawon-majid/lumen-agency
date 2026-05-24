@@ -13,17 +13,17 @@ interface Step {
 const STEPS: Step[] = [
   {
     n: "01",
-    name: "Listen",
+    name: "Define",
     body:
-      "We start by understanding what you're actually trying to ship — not the technology you think you need. One week, deeply.",
+      "A senior week of decisions. We sit with you, your stakeholders, and your data — and we leave with a sharp brief: what AI should do, what success looks like, and what nothing-else solves it.",
     duration: "~ 1 week",
-    deliverables: ["Discovery doc", "Stakeholder map", "Decision log"],
+    deliverables: ["Discovery doc", "Stakeholder map", "Decision log", "Kill list"],
   },
   {
     n: "02",
     name: "Frame",
     body:
-      "We translate ambition into an executable plan. Architecture, evaluation strategy, milestones, risk register. Read it in thirty minutes.",
+      "Architecture, evaluation strategy, milestones, risks. The thirty-minute read-aloud document your CTO and your CFO can both nod at. Nothing builds until this is signed.",
     duration: "~ 1 week",
     deliverables: ["PRD", "Architecture", "Eval plan", "Milestones"],
   },
@@ -31,17 +31,17 @@ const STEPS: Step[] = [
     n: "03",
     name: "Build",
     body:
-      "Small teams, short cycles. Working software on day five, production by the second sprint. You're in the loop daily, not weekly.",
+      "Small senior teams, short cycles. Working software on day five, production by the second sprint. Daily demos, not weekly check-ins. Your team is in the codebase from day one.",
     duration: "6 – 12 weeks",
-    deliverables: ["Production system", "Eval harness", "Weekly demos"],
+    deliverables: ["Production system", "Eval harness", "Daily demos"],
   },
   {
     n: "04",
-    name: "Hand off",
+    name: "Operate",
     body:
-      "We leave behind running systems, evaluation harnesses, runbooks, and a team that can extend everything we wrote.",
+      "We don't disappear at launch. Runbooks, evaluation in CI, drift alerts, a named in-house owner trained alongside us. By the end of week two post-launch, your team can extend everything.",
     duration: "~ 2 weeks",
-    deliverables: ["Runbooks", "Onboarding", "Sample code", "30-day support"],
+    deliverables: ["Runbooks", "Owner training", "Drift evals", "30-day support"],
   },
 ];
 
@@ -65,14 +65,18 @@ export function Process() {
                 fontWeight: 300,
               }}
             >
-              A studio rhythm.<br />
-              <span style={{ fontStyle: "italic" }}>Four movements,</span> repeated.
+              Define · Frame ·<br />
+              <span style={{ fontStyle: "italic" }}>Build · Operate.</span>
             </h2>
+            <p className="mt-7 max-w-xl text-[var(--color-ink-muted)] text-[15px] leading-[1.65]">
+              Four movements, repeated on every engagement. The boring parts —
+              the ones agencies skip — are where the work earns its keep.
+            </p>
           </div>
         </Reveal>
 
         <div className="space-y-14 md:space-y-20">
-          {STEPS.map((s, i) => (
+          {STEPS.map((s) => (
             <Reveal key={s.n}>
               <div
                 className="grid grid-cols-12 gap-x-6 gap-y-8 items-start pt-10 md:pt-14"

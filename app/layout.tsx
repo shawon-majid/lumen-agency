@@ -24,9 +24,26 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lumen — Software, intelligently rendered.",
+  metadataBase: new URL("https://defineai.studio"),
+  title: {
+    default: "Define AI — We define AI for your business.",
+    template: "%s · Define AI",
+  },
   description:
-    "A studio for the age of intelligent software. Lumen designs and builds AI agents, retrieval systems, AI-native interfaces, and ML infrastructure.",
+    "Define AI is a senior advisory studio for AI. We figure out what AI should actually do for your business — then design, build, and hand over the systems that ship it.",
+  openGraph: {
+    title: "Define AI — We define AI for your business.",
+    description:
+      "A senior advisory studio for AI. We define what AI should do for your business, then build the systems that ship it.",
+    siteName: "Define AI",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Define AI — We define AI for your business.",
+    description:
+      "A senior advisory studio for AI. We define what AI should do for your business, then build the systems that ship it.",
+  },
 };
 
 export default function RootLayout({

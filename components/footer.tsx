@@ -1,6 +1,10 @@
 "use client";
 
+import Link from "next/link";
+
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <footer
       className="relative px-6 md:px-10 pt-24 pb-10"
@@ -17,8 +21,8 @@ export function Footer() {
                 fontWeight: 300,
               }}
             >
-              <span style={{ fontStyle: "italic" }}>Lumen</span> — a studio
-              for software that thinks.
+              <span style={{ fontStyle: "italic" }}>Define AI</span> — we figure out
+              what AI should do, then build it.
             </p>
           </div>
 
@@ -30,10 +34,10 @@ export function Footer() {
               Studio
             </p>
             <ul className="space-y-2.5 text-[14px]">
-              <li><a href="#work" className="hover:text-[var(--color-magenta)] transition-colors">Work</a></li>
-              <li><a href="#services" className="hover:text-[var(--color-magenta)] transition-colors">Services</a></li>
-              <li><a href="#process" className="hover:text-[var(--color-magenta)] transition-colors">Process</a></li>
-              <li><a href="#contact" className="hover:text-[var(--color-magenta)] transition-colors">Contact</a></li>
+              <li><Link href="/work" className="hover:text-[var(--color-magenta)] transition-colors">Work</Link></li>
+              <li><Link href="/studio" className="hover:text-[var(--color-magenta)] transition-colors">Studio</Link></li>
+              <li><Link href="/journal" className="hover:text-[var(--color-magenta)] transition-colors">Journal</Link></li>
+              <li><a href="mailto:shawon.majid@gmail.com" className="hover:text-[var(--color-magenta)] transition-colors">Contact</a></li>
             </ul>
           </div>
 
@@ -45,10 +49,24 @@ export function Footer() {
               Elsewhere
             </p>
             <ul className="space-y-2.5 text-[14px]">
-              <li><a href="#" className="hover:text-[var(--color-magenta)] transition-colors">Github</a></li>
-              <li><a href="#" className="hover:text-[var(--color-magenta)] transition-colors">Read.cv</a></li>
-              <li><a href="#" className="hover:text-[var(--color-magenta)] transition-colors">X / Twitter</a></li>
-              <li><a href="#" className="hover:text-[var(--color-magenta)] transition-colors">Substack</a></li>
+              <li>
+                <a
+                  href="https://github.com/shawon-majid"
+                  className="hover:text-[var(--color-magenta)] transition-colors"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:shawon.majid@gmail.com"
+                  className="hover:text-[var(--color-magenta)] transition-colors"
+                >
+                  Email
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -60,9 +78,9 @@ export function Footer() {
               Where
             </p>
             <p className="text-[14px] leading-[1.65]">
-              Brooklyn / Remote
+              Remote · Worldwide
               <br />
-              hello@lumen.studio
+              shawon.majid@gmail.com
             </p>
           </div>
         </div>
@@ -75,14 +93,15 @@ export function Footer() {
             className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]"
             style={{ fontFamily: "var(--font-mono)" }}
           >
-            &copy; 2026 Lumen Studio
+            &copy; {year} Define AI Studio
           </p>
-          <p
-            className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]"
+          <Link
+            href="/v2"
+            className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)] hover:text-[var(--color-magenta)] transition-colors"
             style={{ fontFamily: "var(--font-mono)" }}
           >
-            Software, intelligently rendered.
-          </p>
+            Liquid · v2 design experiment →
+          </Link>
         </div>
       </div>
     </footer>

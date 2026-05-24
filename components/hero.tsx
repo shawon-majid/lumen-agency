@@ -1,14 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 import { WaterCanvas } from "./water-canvas";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const WORDS = [
-  { text: "Software,", italic: false },
-  { text: "intelligently", italic: true },
-  { text: "rendered.", italic: false },
+  { text: "Define", italic: false },
+  { text: "what AI", italic: true },
+  { text: "does.", italic: false },
 ];
 
 export function Hero() {
@@ -45,7 +46,7 @@ export function Hero() {
 
       {/* Meta — top left, opposite of CTA */}
       <motion.div
-        className="absolute top-24 left-6 md:left-10 max-w-[14rem]"
+        className="absolute top-24 left-6 md:left-10 max-w-[16rem]"
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.55, duration: 0.8, ease }}
@@ -54,7 +55,7 @@ export function Hero() {
           className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)] leading-[1.6]"
           style={{ fontFamily: "var(--font-mono)" }}
         >
-          [001] — a studio for<br />the age of intelligent<br />software
+          [001] — a senior studio<br />for the age of intelligent<br />software
         </p>
       </motion.div>
 
@@ -100,21 +101,25 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.95, duration: 0.9, ease }}
           >
-            We design and build the AI systems behind ambitious products — agents,
-            retrieval, interfaces, infrastructure. Embedded with your team, or
-            end-to-end from the studio.
+            We figure out what AI should actually do for your business — then
+            design, build, and hand over the systems that ship it. Senior team.
+            Real evaluations. Owned by you on day one.
           </motion.p>
 
-          <motion.a
-            href="#work"
-            className="group inline-flex items-center gap-3 text-[14px] text-[var(--color-ink)] self-start"
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.15, duration: 0.9 }}
+            className="self-start"
           >
-            <span className="block h-px w-10 bg-[var(--color-ink)] origin-left transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-150" />
-            <span>See selected work</span>
-          </motion.a>
+            <Link
+              href="/work"
+              className="group inline-flex items-center gap-3 text-[14px] text-[var(--color-ink)]"
+            >
+              <span className="block h-px w-10 bg-[var(--color-ink)] origin-left transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-150" />
+              <span>See selected work</span>
+            </Link>
+          </motion.div>
         </div>
       </div>
 

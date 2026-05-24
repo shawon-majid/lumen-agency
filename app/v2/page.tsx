@@ -10,9 +10,9 @@ import { CTA } from "@/components/cta";
 import { Footer } from "@/components/footer";
 
 export const metadata = {
-  title: "Lumen — Liquid · v2",
+  title: "Liquid · v2 design experiment",
   description:
-    "The Liquid theme — Lumen's showcase for glass-on-water UI. Same studio, second skin.",
+    "The Liquid theme — Define AI's showcase for glass-on-water UI. A design experiment retained for reference.",
 };
 
 export default function V2Page() {

@@ -17,7 +17,7 @@ export function CTA() {
             className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)] mb-10"
             style={{ fontFamily: "var(--font-mono)" }}
           >
-            ✺ — Booking · Q3 2026
+            ✺ — Booking · Q3 · two slots open
           </p>
           <h2
             className="leading-[0.94] tracking-[-0.035em] text-[var(--color-ink)] max-w-5xl"
@@ -27,23 +27,24 @@ export function CTA() {
               fontWeight: 300,
             }}
           >
-            Have something{" "}
-            <span style={{ fontStyle: "italic" }}>unreasonable</span>
+            Tell us what AI{" "}
+            <span style={{ fontStyle: "italic" }}>should be doing</span>
             <br />
-            in mind?
+            for your business.
           </h2>
 
           <div className="mt-14 md:mt-20 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
             <p className="text-[var(--color-ink-muted)] text-[15px] leading-[1.65] max-w-md">
-              We take on three to four engagements a quarter. If you&rsquo;re thinking about
-              the next twelve months of your AI roadmap — let&rsquo;s talk early.
+              We take on three to four engagements per quarter. If you&rsquo;re
+              thinking about the next twelve months of your AI roadmap — start
+              with a thirty-minute call and a sharp problem statement.
             </p>
             <a
-              href="mailto:hello@lumen.studio"
+              href="mailto:shawon.majid@gmail.com"
               className="group inline-flex items-center gap-3 rounded-full bg-[var(--color-ink)] pl-7 pr-5 py-4 text-[var(--color-canvas)] hover:bg-[var(--color-magenta)] transition-colors duration-500 self-start"
               data-cursor="large"
             >
-              <span className="text-[14px]">hello@lumen.studio</span>
+              <span className="text-[14px]">shawon.majid@gmail.com</span>
               <span className="text-[14px] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
                 →
               </span>

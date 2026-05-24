@@ -63,7 +63,7 @@ export function HeroV2() {
               className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]"
               style={{ fontFamily: "var(--font-mono)" }}
             >
-              ✺ — Lumen Studio
+              ✺ — Define AI Studio
             </span>
             <span
               className="text-[10.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]"

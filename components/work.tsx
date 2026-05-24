@@ -1,81 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Reveal } from "./reveal";
-
-interface WorkItem {
-  n: string;
-  client: string;
-  title: string;
-  year: string;
-  tags: string[];
-  swatch: string;
-}
-
-const WORK: WorkItem[] = [
-  {
-    n: "01",
-    client: "Aurora",
-    title: "Agent operations platform",
-    year: "2026",
-    tags: ["Agents", "Infra"],
-    swatch:
-      "linear-gradient(135deg, oklch(0.95 0.04 60), oklch(0.82 0.14 45) 50%, oklch(0.68 0.20 18))",
-  },
-  {
-    n: "02",
-    client: "Meridian",
-    title: "Retrieval at fleet scale",
-    year: "2025",
-    tags: ["RAG", "Search"],
-    swatch:
-      "linear-gradient(135deg, oklch(0.93 0.04 25), oklch(0.78 0.16 8) 55%, oklch(0.60 0.22 350))",
-  },
-  {
-    n: "03",
-    client: "North Protocol",
-    title: "A multimodal canvas",
-    year: "2025",
-    tags: ["Interfaces", "Streaming"],
-    swatch:
-      "linear-gradient(135deg, oklch(0.96 0.04 80), oklch(0.86 0.14 75) 55%, oklch(0.72 0.18 55))",
-  },
-  {
-    n: "04",
-    client: "Ripple Labs",
-    title: "Evaluation harness",
-    year: "2025",
-    tags: ["Evals", "Infra"],
-    swatch:
-      "linear-gradient(135deg, oklch(0.93 0.04 20), oklch(0.78 0.17 12) 55%, oklch(0.62 0.21 0))",
-  },
-  {
-    n: "05",
-    client: "Tide & Co.",
-    title: "Embedded copilots",
-    year: "2024",
-    tags: ["Agents", "Interfaces"],
-    swatch:
-      "linear-gradient(135deg, oklch(0.95 0.04 70), oklch(0.84 0.13 55) 55%, oklch(0.70 0.18 30))",
-  },
-  {
-    n: "06",
-    client: "Polaris",
-    title: "Inference at the edge",
-    year: "2024",
-    tags: ["Infrastructure"],
-    swatch:
-      "linear-gradient(135deg, oklch(0.95 0.03 50), oklch(0.80 0.14 40) 55%, oklch(0.64 0.18 12))",
-  },
-];
-
-const SIZES = [
-  "md:col-span-7 aspect-[16/10]",
-  "md:col-span-5 aspect-[4/5]",
-  "md:col-span-8 aspect-[16/9]",
-  "md:col-span-5 aspect-[5/6]",
-  "md:col-span-7 aspect-[16/10]",
-  "md:col-span-5 aspect-[4/5]",
-];
+import { WORK, HOMEPAGE_SIZES, type CaseStudy } from "@/lib/work";
 
 export function Work() {
   return (
@@ -105,8 +32,8 @@ export function Work() {
                 <span style={{ fontStyle: "italic" }}>case studies.</span>
               </h2>
             </div>
-            <a
-              href="#contact"
+            <Link
+              href="/work"
               className="group inline-flex items-center gap-2 text-[14px] text-[var(--color-ink)] self-start"
             >
               <span className="border-b border-[var(--color-ink)]/30 pb-1 group-hover:border-[var(--color-magenta)] transition-colors">
@@ -115,14 +42,14 @@ export function Work() {
               <span className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
                 →
               </span>
-            </a>
+            </Link>
           </div>
         </Reveal>
 
         <div className="space-y-16 md:space-y-28">
           {WORK.map((w, i) => (
-            <Reveal key={w.n}>
-              <WorkRow work={w} flip={i % 2 === 1} sizeClass={SIZES[i % SIZES.length]} />
+            <Reveal key={w.slug}>
+              <WorkRow work={w} flip={i % 2 === 1} sizeClass={HOMEPAGE_SIZES[i % HOMEPAGE_SIZES.length]} />
             </Reveal>
           ))}
         </div>
@@ -136,13 +63,15 @@ function WorkRow({
   flip,
   sizeClass,
 }: {
-  work: WorkItem;
+  work: CaseStudy;
   flip: boolean;
   sizeClass: string;
 }) {
   const tile = (
     <div className={`col-span-12 ${sizeClass}`}>
-      <WorkTile work={work} />
+      <Link href={`/work/${work.slug}`} className="block h-full w-full">
+        <WorkTile work={work} />
+      </Link>
     </div>
   );
 
@@ -158,7 +87,6 @@ function WorkRow({
     </div>
   );
 
-  // Asymmetric: meta on opposite side from where tile starts
   return (
     <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
       {flip ? (
@@ -176,7 +104,7 @@ function WorkRow({
   );
 }
 
-function WorkMeta({ work, align }: { work: WorkItem; align: "left" | "right" }) {
+function WorkMeta({ work, align }: { work: CaseStudy; align: "left" | "right" }) {
   return (
     <div className={align === "right" ? "md:text-right" : ""}>
       <p
@@ -197,8 +125,15 @@ function WorkMeta({ work, align }: { work: WorkItem; align: "left" | "right" }) 
         <br />
         <span className="text-[var(--color-ink-muted)]">{work.title}</span>
       </h3>
+      <p
+        className={`text-[var(--color-ink-muted)] text-[14px] leading-[1.6] max-w-sm mb-5 ${
+          align === "right" ? "md:ml-auto" : ""
+        }`}
+      >
+        {work.tease}
+      </p>
       <div
-        className={`flex gap-3 text-[12px] text-[var(--color-ink-muted)] mt-5 ${
+        className={`flex gap-3 text-[12px] text-[var(--color-ink-muted)] ${
           align === "right" ? "md:justify-end" : ""
         }`}
         style={{ fontFamily: "var(--font-mono)" }}
@@ -211,7 +146,7 @@ function WorkMeta({ work, align }: { work: WorkItem; align: "left" | "right" }) 
   );
 }
 
-function WorkTile({ work }: { work: WorkItem }) {
+function WorkTile({ work }: { work: CaseStudy }) {
   return (
     <div
       className="relative h-full w-full overflow-hidden rounded-[16px] group cursor-none"
@@ -247,7 +182,7 @@ function WorkTile({ work }: { work: WorkItem }) {
             className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink)]/70"
             style={{ fontFamily: "var(--font-mono)" }}
           >
-            View →
+            Read →
           </span>
         </div>
       </div>

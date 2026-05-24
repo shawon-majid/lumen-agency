@@ -28,11 +28,12 @@ export function Quote() {
               fontWeight: 300,
             }}
           >
-            We don&rsquo;t believe AI replaces craft.{" "}
-            <span style={{ fontStyle: "italic" }}>It demands more of it</span> — better
-            taste, clearer thinking, harder evaluation. The studios that win this
-            decade will be the ones that{" "}
-            <span style={{ fontStyle: "italic" }}>refused to lower their standards.</span>
+            Most teams ask, &ldquo;how should we use AI?&rdquo;{" "}
+            <span style={{ fontStyle: "italic" }}>
+              The better question is &mdash; what should we define AI to do that
+              nothing else can?
+            </span>{" "}
+            That&rsquo;s the conversation we&rsquo;re here for.
           </blockquote>
           <div className="mt-12 flex items-center gap-4">
             <div className="h-px w-12 bg-[var(--color-ink-muted)]" />
@@ -40,7 +41,7 @@ export function Quote() {
               className="text-[11.5px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]"
               style={{ fontFamily: "var(--font-mono)" }}
             >
-              Lumen Studio &middot; Founders&rsquo; note
+              Define AI &middot; Founder&rsquo;s note
             </p>
           </div>
         </Reveal>

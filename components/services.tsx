@@ -19,45 +19,45 @@ const SERVICES: Service[] = [
     n: "01",
     name: "AI Agents",
     blurb:
-      "Long-running autonomous systems that hold context, plan, and execute. Built with the runtime safety, observability, and human-in-the-loop seams real businesses require.",
+      "We define where agents earn their keep in your business, build the runtime — memory, tools, evals, escalation — and operate it long enough to hand a team that owns it from day one.",
     capabilities: ["Tool use", "Memory", "Orchestration", "Eval harnesses"],
     layout: "wide",
     swatch:
       "linear-gradient(135deg, oklch(0.95 0.04 70), oklch(0.82 0.14 45) 55%, oklch(0.68 0.20 18))",
-    engagement: { shape: "Discovery → prototype → ship", cycle: "8 – 16 weeks", team: "2 – 4 engineers" },
+    engagement: { shape: "Define → Build → Operate", cycle: "8 – 16 weeks", team: "2 – 4 engineers" },
   },
   {
     n: "02",
     name: "Retrieval Systems",
     blurb:
-      "RAG pipelines that actually retrieve. Hybrid search, reranking, structured + unstructured fusion, and evaluation suites that catch silent drift before your users do.",
+      "RAG that actually retrieves. We start with what 'correct' means in your domain, build hybrid retrieval against it, and put evaluation in CI so silent drift never reaches your customers.",
     capabilities: ["Embeddings", "Hybrid search", "Reranking", "Drift evals"],
     layout: "narrow",
     swatch:
       "linear-gradient(135deg, oklch(0.93 0.04 30), oklch(0.76 0.18 8) 60%, oklch(0.60 0.22 355))",
-    engagement: { shape: "Audit → re-architect → ship", cycle: "6 – 10 weeks", team: "1 – 3 engineers" },
+    engagement: { shape: "Define → Build → Operate", cycle: "6 – 10 weeks", team: "1 – 3 engineers" },
   },
   {
     n: "03",
     name: "AI-Native Interfaces",
     blurb:
-      "Interfaces designed around generative systems — streaming, partial state, optimistic UI, and the texture that makes a tool feel like a thinking partner instead of a chat box.",
+      "Interfaces designed around generative systems — streaming, partial state, optimistic UI, multimodal editing. We define the unit of work first, then make the model fit underneath it.",
     capabilities: ["Streaming UI", "Multimodal", "Editorial design", "Motion"],
     layout: "full",
     swatch:
       "linear-gradient(135deg, oklch(0.96 0.04 80), oklch(0.86 0.14 75) 55%, oklch(0.74 0.18 60))",
-    engagement: { shape: "Concept → design → build", cycle: "4 – 12 weeks", team: "Design + 1 – 2 eng" },
+    engagement: { shape: "Define → Design → Build", cycle: "4 – 12 weeks", team: "Design + 1 – 2 eng" },
   },
   {
     n: "04",
     name: "ML Infrastructure",
     blurb:
-      "Training, evaluation, inference, observability. The boring foundation that decides whether your AI product can ship a Friday change without flinching on Monday.",
+      "Training, evaluation, inference, observability. The boring foundation that lets you ship a Friday change without flinching on Monday. We define your latency budget, then build to it.",
     capabilities: ["Inference", "Training", "Observability", "CI/CD"],
     layout: "narrow",
     swatch:
       "linear-gradient(135deg, oklch(0.94 0.03 45), oklch(0.80 0.15 30) 55%, oklch(0.66 0.19 12))",
-    engagement: { shape: "Embed → harden → hand off", cycle: "8 – 20 weeks", team: "2 – 5 engineers" },
+    engagement: { shape: "Embed → Harden → Hand off", cycle: "8 – 20 weeks", team: "2 – 5 engineers" },
   },
 ];
 
@@ -82,15 +82,16 @@ export function Services() {
                   fontWeight: 300,
                 }}
               >
-                Four ways<br />
-                <span style={{ fontStyle: "italic" }}>we ship</span> intelligence<br />
-                into your product.
+                Four shapes —<br />
+                one <span style={{ fontStyle: "italic" }}>rhythm.</span>
+                <br />
+                Define · Build · Operate.
               </h2>
             </div>
             <p className="max-w-xs text-[var(--color-ink-muted)] text-[14px] leading-[1.65]">
-              Each engagement is sized to the moment — from a five-day prototype to a
-              year-long platform build. We embed alongside your team, or run an
-              end-to-end engagement from the studio.
+              Every engagement is sized to the moment — from a one-week
+              discovery sprint to a quarter-long platform build. We embed
+              alongside your team, or run it end-to-end from the studio.
             </p>
           </div>
         </Reveal>
